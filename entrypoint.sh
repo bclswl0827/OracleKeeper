@@ -18,17 +18,17 @@ function download_video() {
 
 # 影片转黑白
 function convert_video() {
-    ffmpeg -i $1 -vf fade=in:0:90 -y -f mp4 $2
+    ffmpeg -threads 1 -i $1 -vf fade=in:0:90 -y -f mp4 $2
 }
 
 # 影片镜像
 function mirror_video() {
-    ffmpeg -i $1 -vf hflip -y -f mp4 $2
+    ffmpeg -threads 1 -i $1 -vf hflip -y -f mp4 $2
 }
 
 # 影片倍速
 function speed_video() {
-    ffmpeg -i $1 -filter:v "setpts=0.5*PTS" -y -f mp4 $2
+    ffmpeg -threads 1 -i $1 -filter:v "setpts=0.5*PTS" -y -f mp4 $2
 }
 
 function main() {
