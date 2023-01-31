@@ -42,9 +42,6 @@ function main() {
         fi
     done
     while (true); do
-        # 读取影片列表
-        videos=`touch ./videos.txt; \
-                cat ./videos.txt`
         # 下载列表中影片
         for i in $videos; do
             # 创建缓存目录
