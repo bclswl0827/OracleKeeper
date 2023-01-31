@@ -53,7 +53,7 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ghcr.io/${{ steps.string_owner.outputs.lowercase }}/${{ steps.string_repo.outputs.lowercase }}:${{ env.date }}
-            ghcr.io/${{ steps.string_owner.outputs.lowercase }}/${{ steps.string_repo.outputs.lowercase }}:latest
-            ${{ steps.string_owner.outputs.lowercase }}/${{ steps.string_repo.outputs.lowercase }}:${{ env.date }}
-            ${{ steps.string_owner.outputs.lowercase }}/${{ steps.string_repo.outputs.lowercase }}:latest
+            ghcr.io/${{ steps.string_repo.outputs.lowercase }}:${{ env.date }}
+            ghcr.io/${{ steps.string_repo.outputs.lowercase }}:latest
+            ${{ steps.string_repo.outputs.lowercase }}:${{ env.date }}
+            ${{ steps.string_repo.outputs.lowercase }}:latest
