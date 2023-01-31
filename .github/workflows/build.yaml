@@ -19,7 +19,11 @@ jobs:
         id: date
         run: |
           echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
-      - id: string
+      - id: string_owner
+        uses: ASzc/change-string-case-action@v1
+        with:
+          string: ${{ github.repository_owner }}
+      - id: string_repo
         uses: ASzc/change-string-case-action@v1
         with:
           string: ${{ github.repository }}
@@ -27,6 +31,12 @@ jobs:
         uses: docker/setup-qemu-action@master
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@master
+      - name: Login to DockerHub
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@master
+        with:
+          username: ${{ steps.string_owner.outputs.lowercase }}
+          password: ${{ secrets.PAT }}
       - name: Login to GitHub Container Registry
         uses: docker/login-action@master
         with:
@@ -43,5 +53,7 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ghcr.io/inprtx/${{ steps.string.outputs.lowercase }}:${{ env.date }}
-            ghcr.io/inprtx/${{ steps.string.outputs.lowercase }}:latest
+            ghcr.io/${{ steps.string_repo.outputs.lowercase }}:${{ env.date }}
+            ghcr.io/${{ steps.string_repo.outputs.lowercase }}:latest
+            ${{ steps.string_repo.outputs.lowercase }}:${{ env.date }}
+            ${{ steps.string_repo.outputs.lowercase }}:latest
