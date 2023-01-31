@@ -23,7 +23,7 @@ jobs:
           echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
       - name: downcase REPO
         run: |
-          echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
+          echo "repo=${github.repo,,}" >> $GITHUB_ENV
       - name: Set up QEMU
         uses: docker/setup-qemu-action@master
       - name: Set up Docker Buildx
@@ -44,5 +44,5 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ghcr.io/inprtx/${{ REPO }}:${{ env.date }}
-            ghcr.io/inprtx/${{ REPO }}:latest
+            ghcr.io/inprtx/${{ env.repo }}:${{ env.date }}
+            ghcr.io/inprtx/${{ env.repo }}:latest
