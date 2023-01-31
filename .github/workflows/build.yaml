@@ -19,6 +19,10 @@ jobs:
         id: date
         run: |
           echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+      - id: string_owner
+        uses: ASzc/change-string-case-action@v1
+        with:
+          string: ${{ github.repository_owner }}
       - id: string
         uses: ASzc/change-string-case-action@v1
         with:
@@ -31,7 +35,7 @@ jobs:
         if: github.event_name != 'pull_request'
         uses: docker/login-action@master
         with:
-          username: ${{ github.repository_owner }}
+          username: ${{ steps.string_owner.outputs.lowercase }}
           password: ${{ secrets.PAT }}
       - name: Login to GitHub Container Registry
         uses: docker/login-action@master
