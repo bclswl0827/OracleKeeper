@@ -21,9 +21,10 @@ jobs:
         id: date
         run: |
           echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
-      - name: downcase REPO
-        run: |
-          echo "repo=${github.repo,,}" >> $GITHUB_ENV
+      - id: string
+        uses: ASzc/change-string-case-action@v1
+        with:
+          string: ${{ github.repository }}
       - name: Set up QEMU
         uses: docker/setup-qemu-action@master
       - name: Set up Docker Buildx
@@ -44,5 +45,5 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ghcr.io/inprtx/${{ env.repo }}:${{ env.date }}
-            ghcr.io/inprtx/${{ env.repo }}:latest
+            ghcr.io/inprtx/${{ steps.string.outputs.lowercase }}:${{ env.date }}
+            ghcr.io/inprtx/${{ steps.string.outputs.lowercase }}:latest
