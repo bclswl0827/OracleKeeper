@@ -23,10 +23,10 @@ jobs:
         uses: ASzc/change-string-case-action@v1
         with:
           string: ${{ github.repository_owner }}
-      - id: string
+      - id: string_repo
         uses: ASzc/change-string-case-action@v1
         with:
-          string: ${{ github.repo }}
+          string: ${{ github.repository }}
       - name: Set up QEMU
         uses: docker/setup-qemu-action@master
       - name: Set up Docker Buildx
@@ -53,7 +53,7 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ghcr.io/${{ steps.string.outputs.lowercase }}:${{ env.date }}
-            ghcr.io/${{ steps.string.outputs.lowercase }}:latest
-            ${{ steps.string.outputs.lowercase }}:${{ env.date }}
-            ${{ steps.string.outputs.lowercase }}:latest
+            ghcr.io/${{ steps.string_owner.outputs.lowercase }}/${{ steps.string_repo.outputs.lowercase }}:${{ env.date }}
+            ghcr.io/${{ steps.string_owner.outputs.lowercase }}/${{ steps.string_repo.outputs.lowercase }}:latest
+            ${{ steps.string_owner.outputs.lowercase }}/${{ steps.string_repo.outputs.lowercase }}:${{ env.date }}
+            ${{ steps.string_owner.outputs.lowercase }}/${{ steps.string_repo.outputs.lowercase }}:latest
