@@ -28,7 +28,7 @@ function mirror_video() {
 
 # 影片倍速
 function speed_video() {
-    ffmpeg -i $1 -filter:v "setpts=0.5*PTS" -y -f mp4
+    ffmpeg -i $1 -filter:v "setpts=0.5*PTS" -y -f mp4 $2
 }
 
 function main() {
